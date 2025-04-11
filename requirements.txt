@@ -1,0 +1,7 @@
+Flask
+nltk
+pandas
+textblob
+instagrapi
+python-dotenv
+requests
