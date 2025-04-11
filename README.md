@@ -1,10 +1,10 @@
 <div align="center">
   <!-- Fixed: Replaced broken image host with actual image URL -->
-  <img src="https://i.ibb.co/3cTsofS/sentiment-banner.png" width="100%" alt="Social Media Sentiment Analysis Banner">
+  <img src="https://iili.io/3cuN8Kv.md.png" width="100%" alt="Social Media Sentiment Analysis Banner">
 </div>
 
 <div align="center">
-  <h1>🧠 Social Media Sentiment Analyzer</h1>
+  <h1>🧠 Social Media Sentiment Analysis<h1>
 
   <p>
     Analyze emotional tone from <strong>Text</strong>, <strong>Twitter (X)</strong> posts, 
