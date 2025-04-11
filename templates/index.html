@@ -1,0 +1,254 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentiment Analysis X and Instagram App Integration</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  </head>
+  <body>
+    <div class="particles-container" id="particles-js"></div>
+
+    <header>
+      <div class="logo">
+        <img src="static\images\logo.png" alt="Logo" class="logo-image" />
+        <h1>Social Media Sentiment Analysis</h1>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="#single-analysis" class="nav-link active">Text Analysis</a>
+          </li>
+          <li>
+            <a href="#tweet-analysis" class="nav-link">X Tweet Analysis</a>
+          </li>
+          <li><a href="#bulk-analysis" class="nav-link">Bulk Analysis</a></li>
+          <li><a href="#Instagram-analysis" class="nav-link">Instagram</a></li>
+    </header>
+
+    <main>
+      <section id="single-analysis" class="analysis-section active">
+        <div class="card">
+          <h2>Analyze Text Sentiment</h2>
+          <div class="input-group">
+            <textarea
+              id="text-input"
+              placeholder="Enter text to analyze sentiment..."
+            ></textarea>
+            <button id="analyze-btn" class="btn-primary">
+              <span class="btn-text">Analyze</span>
+              <span class="btn-icon"><i class="fas fa-search"></i></span>
+            </button>
+          </div>
+
+          <div id="result-container" class="hidden">
+            <div class="result-header">
+              <h3>Analysis Result</h3>
+              <div class="polarity-meter">
+                <div class="meter">
+                  <div class="meter-pointer" id="polarity-pointer"></div>
+                  <div class="meter-labels">
+                    <span>Negative</span>
+                    <span>Neutral</span>
+                    <span>Positive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display:none;" id="ys-credit">Made by Yash Suthar</div>
+
+            <div class="result-content">
+              <div id="sentiment-badge" class="sentiment-badge"></div>
+              <div id="polarity-value"></div>
+              <div id="analyzed-text"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="tweet-analysis" class="analysis-section">
+        <div class="card">
+          <h2>Analyze X Tweet Sentiment</h2>
+          <div class="input-group">
+            <input
+              type="text"
+              id="tweet-id-input"
+              placeholder="Enter X Tweet URL or Tweet ID"
+            />
+            <button id="analyze-tweet-btn" class="btn-primary">
+              <span class="btn-text">Analyze Tweet</span>
+              <span class="btn-icon"><i class="fab fa-x-twitter"></i></span>
+            </button>
+          </div>
+
+          <div id="tweet-result-container" class="hidden">
+            <div class="result-header">
+              <h3>Tweet Analysis Result</h3>
+              <div class="polarity-meter">
+                <div class="meter">
+                  <div class="meter-pointer" id="tweet-polarity-pointer"></div>
+                  <div class="meter-labels">
+                    <span>Negative</span>
+                    <span>Neutral</span>
+                    <span>Positive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-content">
+              <div id="tweet-sentiment-badge" class="sentiment-badge"></div>
+              <div id="tweet-polarity-value"></div>
+              <div id="tweet-text"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="bulk-analysis" class="analysis-section">
+        <div class="card">
+          <h2>Bulk Sentiment Analysis</h2>
+          <div class="input-group">
+            <div class="file-upload">
+              <input type="file" id="csv-file-input" accept=".csv" />
+              <label for="csv-file-input">
+                <i class="fas fa-file-csv"></i>
+                <span id="file-name">Choose CSV file</span>
+              </label>
+            </div>
+            <button id="analyze-bulk-btn" class="btn-primary" disabled>
+              <span class="btn-text">Analyze Data</span>
+              <span class="btn-icon"><i class="fas fa-chart-pie"></i></span>
+            </button>
+          </div>
+
+          <div class="bulk-info">
+            <p>
+              Upload a CSV file with a column named "text" containing the
+              content to analyze.
+            </p>
+          </div>
+
+          <div id="bulk-result-container" class="hidden">
+            <div class="result-header">
+              <h3>Bulk Analysis Results</h3>
+            </div>
+
+            <div class="chart-container">
+              <canvas id="sentiment-chart"></canvas>
+            </div>
+
+            <div id="summary-stats" class="summary-stats"></div>
+
+            <div class="toggle-container">
+              <button id="toggle-details-btn" class="btn-secondary">
+                <span class="btn-text">Show Details</span>
+                <span class="btn-icon"
+                  ><i class="fas fa-chevron-down"></i
+                ></span>
+              </button>
+            </div>
+
+            <div id="details-container" class="details-container hidden">
+              <table id="results-table">
+                <thead>
+                  <tr>
+                    <th>Text</th>
+                    <th>Sentiment</th>
+                    <th>Polarity</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="Instagram-analysis" class="analysis-section">
+        <div class="card">
+          <h2>Analyze Instagram Post Sentiment</h2>
+          <div class="input-group">
+            <input
+              type="text"
+              id="instagram-post-input"
+              placeholder="Enter Instagram Post URL or Post ID"
+            />
+            <button id="analyze-instagram-btn" class="btn-primary">
+              <span class="btn-text">Analyze Post</span>
+              <span class="btn-icon"><i class="fab fa-instagram"></i></span>
+            </button>
+          </div>
+      
+          <div id="instagram-result-container" class="hidden">
+            <div class="result-header">
+              <h3>Your Analysed Sentiment is Here 😊</h3>
+              <div class="polarity-meter">
+                <div class="meter">
+                  <div class="meter-pointer" id="instagram-polarity-pointer"></div>
+                  <div class="meter-labels">
+                    <span>Negative</span>
+                    <span>Neutral</span>
+                    <span>Positive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+            <div class="result-content">
+              <div id="instagram-sentiment-badge" class="sentiment-badge"></div>
+              <div id="instagram-polarity-value"></div>
+              <div id="instagram-text"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    </main>
+
+  </main>
+  // 🛑 This file is protected by Yash Suthar (trynayash)
+  // 💡 Do not remove credit or the wrath of karma shall find you 😤
+  
+  <footer>
+    <!-- Animated background elements -->
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="footer-pattern footer-pattern-1" alt="decorative icon">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" class="footer-pattern footer-pattern-2" alt="decorative icon">
+    
+    <div class="footer-content">
+      <h3 class="footer-heading">
+        <i class="fas fa-heart"></i>
+        Developed with Passion
+        <i class="fas fa-code"></i>
+      </h3>
+      
+      <div class="team-members">
+        <div class="member-card">
+          <i class="fas fa-user-graduate"></i>
+          <span>Yash Suthar</span>
+        </div>
+
+      <p style="color: var(--text-light); margin-top: 1.5rem; font-size: 0.9rem;">
+        A Project by BCA Student of Parul University 2025 Batch | All Rights Reserved
+      </p>
+    </div>
+  </footer>
+
+  <div id="confetti-container" class="confetti-container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="{{ url_for('static', filename='js/particles-config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/confetti.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
+// 🛑 This file is protected by Yash Suthar (trynayash)
+// 💡 Do not remove credit or the wrath of karma shall find you 😤
