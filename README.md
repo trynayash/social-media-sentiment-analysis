@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://your-hosted-image.com/banner.png" width="100%" alt="Social Media Sentiment Analyzer Banner" />
+  <img src="https://freeimage.host/i/3cTsofS" width="100%" alt="Social Media Sentiment Analyzer Banner" />
 </div>
 
 <div align="center">
@@ -50,8 +50,8 @@
 
 ```bash
 # Clone this repository
-git clone https://github.com/your-username/social-media-sentiment-analyzer.git
-cd social-media-sentiment-analyzer
+git clone https://github.com/trynayash/social-media-sentiment-analysis.git
+cd social-media-sentiment-analysis
 
 # Install dependencies
 pip install -r requirements.txt
@@ -81,8 +81,8 @@ python app.py
 ## 📷 Screenshots
 
 <div align="center">
-  <img src="https://your-hosted-image.com/screenshot-1.png" width="90%" />
-  <img src="https://your-hosted-image.com/screenshot-2.png" width="90%" />
+  <img src="https://ibb.co/1JQSxDVG" width="90%" />
+  <img src="https://ibb.co/RkLFJh1V" width="90%" />
 </div>
 
 ---
