@@ -1,6 +1,6 @@
 <div align="center">
   <!-- Fixed: Replaced broken image host with actual image URL -->
-  <img src="https://iili.io/3cuN8Kv.md.png" width="100%" alt="Social Media Sentiment Analysis Banner">
+  <img src="https://iili.io/3cugaG1.md.png" width="100%" alt="Social Media Sentiment Analysis Banner">
 </div>
 
 <div align="center">
