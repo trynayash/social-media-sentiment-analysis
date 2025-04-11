@@ -1,0 +1,61 @@
+name: YashTrap Watermark Restore
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  watermark-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Add watermark if missing
+        run: |
+          files=$(find . -name "*.py" -o -name "*.html" -o -name "*.js" -o -name "*.css")
+          for f in $files; do
+            if ! grep -q "Yash Suthar" "$f"; then
+              echo "// 🔒 Yash Suthar watermark added" | cat - "$f" > temp && mv temp "$f"
+              echo "✅ Watermark restored in $f"
+            fi
+          done
+
+          git config --global user.name "YashBot"
+          git config --global user.email "yash@bot.trap"
+          git add .
+          git diff --cached --quiet || git commit -m "🔁 YashTrap restored missing watermarks" && git push
+```yml
+name: YashTrap Watermark Restore
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  watermark-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Add watermark if missing
+        run: |
+          files=$(find . -type f \( -name "*.py" -o -name "*.html" -o -name "*.js" -o -name "*.css" \))
+          for f in $files; do
+            if ! grep -q "Yash Suthar" "$f"; then
+              echo "// Yash Suthar watermark added" | cat - "$f" > temp && mv temp "$f"
+              echo "Watermark restored in $f"
+            fi
+          done
+
+          git config --global user.name "YashBot"
+          git config --global user.email "yash@bot.trap"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes detected"
+          else
+            git commit -m "YashTrap restored missing watermarks"
+            git push
+          fi
+```
