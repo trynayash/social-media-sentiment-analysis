@@ -5,3 +5,4 @@ textblob
 instagrapi
 python-dotenv
 requests
+gunicorn
