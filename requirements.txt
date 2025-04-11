@@ -6,3 +6,5 @@ instagrapi
 python-dotenv
 requests
 gunicorn
+PIL
+Pillow>=8.1.1
