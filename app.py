@@ -1,6 +1,6 @@
 # 🔐 Developed by Yash Suthar (@trynayash)
-# 🛑 Do not remove this credit or karma will strike!
-
+# 🔝 Do not remove this credit or karma will strike!
+# app.py - Remove or comment out Instagram login during deployment
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import re
@@ -25,11 +25,11 @@ app = Flask(__name__)
 
 # X API credentials (to be stored in .env file)
 BEARER_TOKEN = os.getenv('BEARER_TOKEN')
-INSTAGRAM_USERNAME = os.getenv('INSTAGRAM_USERNAME')
-INSTAGRAM_PASSWORD = os.getenv('INSTAGRAM_PASSWORD')
+# INSTAGRAM_USERNAME = os.getenv('INSTAGRAM_USER')
+# INSTAGRAM_PASSWORD = os.getenv('INSTAGRAM_PASS')
 
 cl = Client()
-cl.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD)
+# cl.login(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD) 
 
 def clean_text(text):
     """Clean the text by removing special characters, links, etc."""
@@ -86,7 +86,6 @@ def get_tweet_by_id(tweet_id):
         print(f"Making API request to: {url}")
         response = requests.get(url, headers=headers)
         
-        # More detailed error handling
         if response.status_code == 200:
             if 'data' in response.json() and 'text' in response.json()['data']:
                 return response.json()['data']['text']
@@ -124,16 +123,13 @@ def analyze():
     data = request.get_json()
     text = data.get('text', '')
     
-    # Use both analyzers for more robust results
     textblob_result = analyze_sentiment_textblob(text)
     nltk_result = analyze_sentiment_nltk(text)
     
-    # Use NLTK result as primary, TextBlob as secondary
     result = nltk_result
     result['secondary_polarity'] = textblob_result['polarity']
     result['credit'] = 'Created by Yash Suthar'
 
-    
     return jsonify(result)
 
 @app.route('/analyze_tweet', methods=['POST'])
@@ -155,14 +151,13 @@ def analyze_tweet():
 
         tweet_id = None
         
-        # Improved URL pattern matching
         url_pattern = r'^(https?://)?(www\.|mobile\.)?(twitter\.com|x\.com)/.+?/status/(\d+)'
         if re.match(url_pattern, tweet_input, re.IGNORECASE):
             match = re.search(r'/status/(\d+)', tweet_input)
             if match:
                 tweet_id = match.group(1)
         elif tweet_input.isdigit():
-            if len(tweet_input) < 15:  # Twitter IDs are snowflake IDs (typically 18-19 digits)
+            if len(tweet_input) < 15:
                 return jsonify({
                     "error": "Invalid numeric Tweet ID 😞",
                     "error_type": "format_error"
@@ -197,7 +192,6 @@ def analyze_tweet():
                 ]
             }), 404
 
-        # Analysis pipeline
         textblob_result = analyze_sentiment_textblob(tweet_text)
         nltk_result = analyze_sentiment_nltk(tweet_text)
         
@@ -236,11 +230,7 @@ def analyze_bulk():
     if file and file.filename.endswith('.csv'):
         try:
             df = pd.read_csv(file)
-
-            # Convert column names to lowercase to avoid case-sensitivity issues
             df.columns = df.columns.str.lower()
-
-            # Check if the CSV has the required 'text' column (case insensitive)
             if 'text' not in df.columns:
                 return jsonify({"error": "CSV must contain a 'text' column"}), 400
                 
@@ -268,14 +258,10 @@ def analyze_instagram():
         data = request.get_json()
         post_url = data.get('post_url', '').strip()
         
-        # Extract media ID from URL
         media_pk = cl.media_pk_from_url(post_url)
         media_info = cl.media_info(media_pk)
-        
-        # Analyze caption
         caption = media_info.caption_text
         
-        # Perform sentiment analysis
         textblob_result = analyze_sentiment_textblob(caption)
         nltk_result = analyze_sentiment_nltk(caption)
         
@@ -299,6 +285,5 @@ def analyze_instagram():
             "details": str(e)
         }), 500
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=os.getenv("FLASK_DEBUG", "False") == "True")
