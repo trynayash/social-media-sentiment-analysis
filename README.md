@@ -134,9 +134,7 @@ Visit: [http://localhost:5000](http://localhost:5000)
 **Yash Suthar**  
 🎓 AI Enthusiast | 📊 Data Explorer | 💻 Ethical Tech Advocate
 
-- 💼 [LinkedIn](https://www.linkedin.com/in/yash-suthar/)
-- 🎨 [designwithyxsh (Fiverr)](https://www.fiverr.com/designwithyxsh)
-- 🌐 [Willing2Digital](https://willing2digital.in)
+- 💼 [LinkedIn](https://www.linkedin.com/in/yxshsuthar/)
 
 ---
 
