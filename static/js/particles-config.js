@@ -1,3 +1,4 @@
+// 🔒 Yash Suthar watermark added
 // static/js/particles-config.js
 particlesJS("particles-js", {
   particles: {

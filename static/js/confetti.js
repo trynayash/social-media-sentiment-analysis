@@ -1,3 +1,4 @@
+// 🔒 Yash Suthar watermark added
 function launchConfetti() {
     const confettiContainer = document.getElementById('confetti-container');
     confettiContainer.innerHTML = ''; // Clear previous confetti
