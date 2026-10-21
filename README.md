@@ -1,156 +1,57 @@
-
 <div align="center">
   <img src="https://iili.io/3cugaG1.md.png" width="100%" alt="Social Media Sentiment Analysis Banner" />
 </div>
 
-<h1 align="center">🧠 Social Media Sentiment Analysis</h1>
+# Social Media Sentiment Analysis
 
-<p align="center">
-  Analyze emotional tone from <strong>Text</strong>, <strong>Twitter (X)</strong> posts, 
-  <strong>Instagram</strong> captions, and <strong>CSV</strong> data in real-time.<br />
-  Built, protected, and designed by <strong>Yash Suthar</strong> ✨
-</p>
+A small Flask app by Yash Suthar that labels text as positive, negative or neutral. It uses two lexicon-based analyzers: NLTK's VADER (the main result) and TextBlob (shown as a second polarity score).
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Live%20Demo-Not%20Deployed%20Yet-lightgrey?style=flat-square" />
-  <img src="https://img.shields.io/badge/Protected-YashTrap™-purple?style=flat-square" />
-  <img src="https://img.shields.io/badge/Built%20with-Flask%20%26%20Python-blue?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-orange?logo=javascript" />
-  <img src="https://img.shields.io/badge/NLP-VADER%20%2B%20TextBlob-red?logoColor=white" />
-</p>
+## What it does
 
----
+- **Text**: paste any text and get a sentiment label and a polarity score.
+- **Tweet**: enter a tweet ID or URL. The app fetches the tweet text with the X (Twitter) API v2 and analyzes it. This needs a bearer token.
+- **CSV**: upload a CSV file with a column named `text`. Each row is analyzed.
+- **Instagram**: enter a post URL and the app reads the caption with Instagrapi, an unofficial Instagram library. The login line in `app.py` is commented out, so this only works after you add your own login.
 
-## 🚀 Features
+Text is cleaned first (links, mentions and punctuation are removed). There is no trained model; both analyzers use word lists.
 
-- 🔍 **Real-time** sentiment analysis
-- 🧠 Powered by **VADER** and **TextBlob**
-- 🐍 Backend with **Flask & Python**
-- 📊 Upload **CSV** files for batch processing
-- 🐦 Twitter (X) integration using API v2
-- 📸 Instagram analysis via session file login
-- 🔐 **YashTrap™** watermark system protection
+## Tech stack
 
----
+- Backend: Python, Flask, pandas, NLTK (VADER), TextBlob, requests, Instagrapi
+- Frontend: HTML, CSS and JavaScript in `templates/` and `static/`
 
-## 🛠️ Tech Stack
-
-| Layer         | Technologies                          |
-|---------------|---------------------------------------|
-| Backend       | Flask, Python                         |
-| Frontend      | HTML, CSS, JavaScript                 |
-| NLP Engine    | VADER, TextBlob                       |
-| Data Handling | Pandas, Matplotlib                    |
-| APIs          | Twitter API v2, Instagrapi (Unofficial)|
-| Security      | Proprietary YashTrap™ watermark system|
-
----
-
-## 📦 Project Structure
-
-```
-social-media-sentiment-analysis/
-├── app.py                     # Main Flask app
-├── static/                   # Static files (CSS, JS, assets)
-├── templates/                # HTML templates
-├── instagrapi_login.py       # Instagram session generator
-├── requirements.txt          # Python dependencies
-├── .env.example              # Env variables template
-└── README.md
-```
-
----
-
-## 🧪 Getting Started
-
-### 🔧 Installation
+## Run it locally
 
 ```bash
-# Clone the repository
 git clone https://github.com/trynayash/social-media-sentiment-analysis.git
 cd social-media-sentiment-analysis
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### 🔐 Environment Setup
-
-Create a `.env` file or export variables in your terminal:
-
-```bash
-export TWITTER_BEARER_TOKEN="your_twitter_bearer_token"
-```
-
-⚠️ Instagram login uses an unofficial API. Run the following helper once:
-
-```bash
-python instagrapi_login.py
-```
-
-This will generate a session file for secure use in `app.py`.
-
-### ▶️ Run the App
-
-```bash
+pip install flask pandas nltk textblob requests python-dotenv instagrapi
 python app.py
 ```
 
-Visit: [http://localhost:5000](http://localhost:5000)
+Then open http://localhost:5000. On the first run the app downloads the NLTK data it needs.
 
----
+`requirements.txt` lists many packages the app does not use, so the shorter install line above is quicker.
 
-## 📷 Screenshots
+For tweet analysis, set your token before starting the app:
 
-<div align="center">
-  <img src="https://i.ibb.co/0jQGR0B/dashboard-preview.png" width="90%" alt="Dashboard Preview" />
-  <br><br>
-  <img src="https://i.ibb.co/6YCW3Mg/results-preview.png" width="90%" alt="Results Preview" />
-</div>
+```bash
+export BEARER_TOKEN="your_x_api_bearer_token"
+```
 
----
+## Project structure
 
-## 💡 Tips & Notes
+```
+app.py          Flask app and all routes
+templates/      index.html
+static/         CSS, JavaScript and images
+Procfile        gunicorn start command
+```
 
-- **Twitter API**: Requires developer account and active Bearer Token.
-- **Instagram**: Uses Instagrapi (unofficial), which may break over time. Use cautiously.
-- **CSV Analysis**: Supports UTF-8 CSVs with a single text column.
+## Watermark workflow
 
----
+`.github/workflows/yashtrap.yml` runs on every push. It adds a credit comment to any `.py`, `.html`, `.js` or `.css` file that does not mention Yash Suthar.
 
-## 🌐 Deployment Recommendations
+## License
 
-| Platform        | Status    | Notes                             |
-|-----------------|-----------|-----------------------------------|
-| Render          | ✅ Good    | Use Python web service setup      |
-| Heroku          | ✅ Good    | Use Container Registry for Flask  |
-| PythonAnywhere  | ✅ Good    | Easy for quick deployments        |
-| Vercel          | ❌ Avoid   | Not suitable for Flask apps       |
-
----
-
-## 👨‍💻 Author
-
-**Yash Suthar**  
-🎓 AI Enthusiast | 📊 Data Explorer | 💻 Ethical Tech Advocate
-
----
-
-## 🛡️ License
-
-This project is licensed under the **MIT License**.  
-However, the proprietary `YashTrap™` watermark system remains protected and must not be altered or redistributed.
-
----
-
-## ⭐ Show Support
-
-If you found this project useful:
-
-- 🌟 Star this repository
-- 🌀 Share it with others
-- 🛠️ Contribute or suggest features
-
----
-
-Made with ❤️ by **Yash Suthar**
+MIT. See [LICENSE](LICENSE).
