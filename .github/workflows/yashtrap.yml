@@ -19,7 +19,14 @@ jobs:
           files=$(find . -name "*.py" -o -name "*.html" -o -name "*.js" -o -name "*.css")
           for f in $files; do
             if ! grep -q "Yash Suthar" "$f"; then
-              echo "// 🔒 Yash Suthar watermark added" | cat - "$f" > temp && mv temp "$f"
+              # Use each file type's own comment syntax so the file still parses
+              case "$f" in
+                *.py) mark="# Yash Suthar watermark added" ;;
+                *.html) mark="<!-- Yash Suthar watermark added -->" ;;
+                *.css) mark="/* Yash Suthar watermark added */" ;;
+                *) mark="// Yash Suthar watermark added" ;;
+              esac
+              echo "$mark" | cat - "$f" > temp && mv temp "$f"
               echo "✅ Watermark restored in $f"
             fi
           done

@@ -1,10 +1,8 @@
-<div align="center">
-  <img src="https://iili.io/3cugaG1.md.png" width="100%" alt="Social Media Sentiment Analysis Banner" />
-</div>
-
 # Social Media Sentiment Analysis
 
 A small Flask app by Yash Suthar that labels text as positive, negative or neutral. It uses two lexicon-based analyzers: NLTK's VADER (the main result) and TextBlob (shown as a second polarity score).
+
+![The text analysis page showing a positive result with a polarity of 0.77](docs/screenshot.png)
 
 ## What it does
 
@@ -25,13 +23,11 @@ Text is cleaned first (links, mentions and punctuation are removed). There is no
 ```bash
 git clone https://github.com/trynayash/social-media-sentiment-analysis.git
 cd social-media-sentiment-analysis
-pip install flask pandas nltk textblob requests python-dotenv instagrapi
+pip install -r requirements.txt
 python app.py
 ```
 
 Then open http://localhost:5000. On the first run the app downloads the NLTK data it needs.
-
-`requirements.txt` lists many packages the app does not use, so the shorter install line above is quicker.
 
 For tweet analysis, set your token before starting the app:
 
